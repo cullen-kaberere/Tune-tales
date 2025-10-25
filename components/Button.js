@@ -1,3 +1,4 @@
+"use client"
 export default function Button({ children, variant = "primary", size = "md", className = "", ...props }) {
   const variantClass = `button-${variant}`
   const sizeClass = `button-${size}`

@@ -1,6 +1,8 @@
-import Header from "@/components/Header"
-import Footer from "@/components/Footer"
-import Button from "@/components/Button"
+"use client"; 
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import Button from "@/components/Button";
+import { spotifyLogin } from "@/lib/api";
 
 export default function Home() {
   return (
@@ -15,7 +17,9 @@ export default function Home() {
             music journey.
           </p>
           <div className="hero-cta-container">
-            <Button size="lg">Connect with Spotify</Button>
+            <Button size="lg" onClick={spotifyLogin}>
+              Connect with Spotify
+            </Button>
             <Button variant="secondary" size="lg">
               Learn More
             </Button>
@@ -24,5 +28,5 @@ export default function Home() {
       </main>
       <Footer />
     </>
-  )
+  );
 }
