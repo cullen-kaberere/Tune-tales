@@ -1,36 +1,47 @@
 "use client"
+import { useState, useEffect } from "react"
 import Header from "@/components/Header"
 import Footer from "@/components/Footer"
 import Card from "@/components/Card"
 import Button from "@/components/Button"
-import { useEffect, useState } from "react"
-import { getWrappedData } from "@/lib/api"
 
 export default function Wrapped() {
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [wrapped, setWrapped] = useState(null)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    async function fetchData() {
-      const result = await getWrappedData();
-      setData(result);
-      setLoading(false);
+    async function fetchWrapped() {
+      try {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/analyze`,
+          { credentials: "include" }
+        )
+        const data = await res.json()
+        if (!data.error) setWrapped(data)
+      } catch (error) {
+        console.error(error)
+      } finally {
+        setLoading(false)
+      }
     }
-    fetchData();
-  }, []);
+    fetchWrapped()
+  }, [])
 
-  if (loading) {
-    return <p style={{ textAlign: "center", marginTop: "50px" }}>Loading your music story...</p>;
+  if (loading) return <p>Loading your music magic… 🎧</p>
+
+  if (!wrapped) {
+    return (
+      <>
+        <Header />
+        <main className="page-container">
+          <p>No Wrapped data yet. Try connecting again.</p>
+        </main>
+        <Footer />
+      </>
+    )
   }
 
-  if (!data || data.error) {
-    return <p style={{ textAlign: "center", marginTop: "50px" }}>No Wrapped data found. Try connecting again.</p>;
-  }
-
-  const topTrack = data.top_tracks[0];
-  const topArtist = data.top_tracks[0].artists[0];
-  const summary = data.template_summary;
-
+  const topTrack = wrapped.top_tracks[0]
   return (
     <>
       <Header />
@@ -40,18 +51,10 @@ export default function Wrapped() {
 
           <Card>
             <div className="wrapped-card-container">
-              <div>
-                <h3 className="card-title">Top Track</h3>
-                <p className="card-description">{topTrack.name}</p>
-              </div>
-              <div>
-                <h3 className="card-title">Top Artist</h3>
-                <p className="card-description">{topArtist.name}</p>
-              </div>
-              <div>
-                <h3 className="card-title">Summary</h3>
-                <p className="card-description">{summary}</p>
-              </div>
+              <h3 className="card-title">{topTrack.name}</h3>
+              <p className="card-description">
+                {topTrack.artists[0].name}
+              </p>
             </div>
 
             <div className="share-button-container">
