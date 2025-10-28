@@ -5,6 +5,9 @@ import Footer from "@/components/Footer"
 import Card from "@/components/Card"
 import Button from "@/components/Button"
 
+
+
+
 export default function Wrapped() {
   const [wrapped, setWrapped] = useState(null)
   const [loading, setLoading] = useState(true)
