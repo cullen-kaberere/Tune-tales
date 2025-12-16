@@ -334,12 +334,19 @@ a:hover {
   background: rgba(10, 10, 10, 0.95);
   border-bottom: 1px solid var(--border-color);
   backdrop-filter: blur(10px);
+  border-radius: 30px;
+  width: 52%;
+  margin: auto;
 }
 
 .header-nav-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: var(--spacing-lg);
+  /* padding: var(--spacing-lg); */
+  padding-top: 18px;
+  padding-right: 29px;
+  padding-bottom: 18px;
+  padding-left: 18px;
   display: flex;
   justify-content: space-between;
   align-items: center;
